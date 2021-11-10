@@ -1,12 +1,16 @@
 import jwt
 import time
+import os
+from dotenv import load_dotenv
 
-issuer_id = '[ISSUER_ID]'
-key_id = '[KEY_ID]'
-private_key = 'AuthKey_[KEY_ID].p8'
+# load .env variables
+load_dotenv()
+issuer_id = os.environ.get("ISSUER_ID")
+key_id = os.environ.get("KEY_ID")
+key_file = os.environ.get("KEY_FILE")
 
-# read private key
-with open(private_key, 'r+b') as keyfile:
+# read private key file
+with open(key_file, 'r+b') as keyfile:
     secret = keyfile.read()
 
 # generate an expiration time

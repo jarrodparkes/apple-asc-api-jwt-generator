@@ -13,12 +13,13 @@ key_file = os.environ.get("KEY_FILE")
 with open(key_file, 'r+b') as keyfile:
     secret = keyfile.read()
 
-# generate an expiration time
+# generate an expiration time (20 minutes from now)
 expir = round(time.time() + 20 * 60)
 
 # sign the token with the iss, time, key, and kid with the correct alg
-token = jwt.encode({'iss': issuer_id, 
-                    'exp': expir, 
+token = jwt.encode({'iss': issuer_id,
+                    'iat': round(time.time()),
+                    'exp': expir,
                     'aud': 'appstoreconnect-v1'},
                     secret, algorithm='ES256', 
                     headers={'alg': 'ES256', 'kid': key_id, 'typ': 'JWT'})
